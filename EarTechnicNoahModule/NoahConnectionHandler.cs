@@ -65,11 +65,6 @@ namespace EarTechnicNoahModule
         {
             _moduleApı.Connect(Resources.ManufacturerModuleId, this);
         }
-        
-        private void setNoahConnectedUser(ModuleUser moduleUser)
-        {
-
-        }
 
         public bool LaunchModule()
         {
