@@ -14,5 +14,24 @@ namespace EarTechnicNoahModule.Entity
             _userGuid = _moduleApı.CurrentUser.UserGUID;
             return this;
         }
+
+        public void SetUserGuid(Guid guid)
+        {
+            _userGuid = guid;
+        }
+
+        public Guid GetUserGuid()
+        {
+            return _userGuid;
+        }
+        public void SetUserName(string name)
+        {
+            _name = name;
+        }
+
+        public string GetUserName()
+        {
+            return _name;
+        }
     }
 }

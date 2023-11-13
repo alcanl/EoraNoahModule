@@ -10,8 +10,7 @@ namespace EarTechnicNoahModule
 {
     public class NoahConnectionHandler : MarshalByRefObject, ICallbackHandler
     {
-        private readonly ModuleAPI _moduleApı = new ModuleAPI();
-
+        private readonly ModuleAPI _moduleApi = new ModuleAPI();
         public static bool IsNoahInstalled()
         {
             var regKey = Environment.Is64BitOperatingSystem ? Registry.LocalMachine.OpenSubKey(Resources.Os64Bit)
@@ -21,6 +20,7 @@ namespace EarTechnicNoahModule
 
             return obj != null && obj is int num && num != 0;
         }
+        
         public bool CanSwitchPatient()
         {
             return AcceptToDisconnect();
@@ -35,7 +35,7 @@ namespace EarTechnicNoahModule
         }
         private bool CheckForSavedData()
         {
-            return true;
+            return false;
         }
 
         private void DisableUserInputs()
@@ -60,21 +60,11 @@ namespace EarTechnicNoahModule
                 EnableUserInputs();
             }
         }
-
-        private void initializeModule()
-        {
-            _moduleApı.Connect(Resources.ManufacturerModuleId, this);
-        }
         
-        private void setNoahConnectedUser(ModuleUser moduleUser)
-        {
-
-        }
-
         public bool LaunchModule()
         {
             try {
-                _moduleApı.Connect(Resources.ManufacturerID, this);
+                _moduleApi.Connect(Resources.ManufacturerID, this, true);
             }
             catch (Exception ex)
             {
@@ -83,6 +73,51 @@ namespace EarTechnicNoahModule
             }
 
             return true;
+        }
+
+        public void CheckForNoah()
+        {
+            throw new WarningException("Not Implemented Yet");
+        }
+
+        public bool IsCorrectModule()
+        {
+            return _moduleApi.GetLaunchInfo().ModuleId == Resources.ManufacturerModuleId;
+        }
+
+        public bool IsNoahAlive()
+        {
+            return _moduleApi.IsNoahAlive();
+        }
+
+        public void DısconnectModule()
+        {
+            _moduleApi.Disconnect();
+        }
+
+        public ModulePatient GetNoahPatient()
+        {
+            return new ModulePatient().GetInfoFromNoah(_moduleApi);
+        }
+
+        public void AddFittingRecordAction(Himsa.Noah.Modules.Action action, short deviceType, EarType earType)
+        {
+            action.DeviceType = deviceType;
+
+            action.DataType = earType.ToString() == Resources.LeftEar
+                ? new DataType { Code = Resources.HIFitting_L, Format = 100 }
+                : new DataType { Code = Resources.HIFitting_R, Format = 100 };
+            
+            _moduleApi.CurrentSession.Actions.Add(action);
+        }
+
+        public void AddAudioGramAction(Himsa.Noah.Modules.Action action, short deviceType)
+        {
+            action.DeviceType = deviceType;
+
+            action.DataType = new DataType { Code = Resources.Audiogram, Format = 100 };
+
+            _moduleApi.CurrentSession.Actions.Add(action);
         }
         
     }

@@ -112,13 +112,26 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="App.cs" />
+        <Compile Include="EarType.cs" />
+        <Compile Include="EnableDisable.cs" />
         <Compile Include="Entity\ModulePatient.cs" />
         <Compile Include="Entity\ModuleUser.cs" />
         <Compile Include="Global\Resources.cs" />
         <Compile Include="ModuleGUI\MainForm.cs" />
         <Compile Include="NoahConnectionHandler.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="Properties\Resources.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
         <Compile Include="Registration\RegisterModule.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Include="Properties\Resources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

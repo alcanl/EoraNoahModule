@@ -24,4 +24,8 @@
   &lt;Assembly Path="C:\Users\alica\Desktop\NOAH_TEST\BusinessSystemExternalControlsLibrary.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Users\alica\Desktop\NOAH_TEST\ModuleAPI.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Users\alica\Desktop\NOAH_TEST\CommonUtil.dll" /&gt;&#xD;
-&lt;/AssemblyExplorer&gt;</s:String></wpf:ResourceDictionary>
+&lt;/AssemblyExplorer&gt;</s:String>
+	<s:Boolean x:Key="/Default/ResxEditorPersonal/CheckedGroups/=EarTechnicNoahModule_002FProperties_002FResources/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/ResxEditorPersonal/Initialized/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/ResxEditorPersonal/ShowOnlyErrors/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/ResxEditorPersonal/ShowOnlyStringResources/@EntryValue">True</s:Boolean></wpf:ResourceDictionary>
