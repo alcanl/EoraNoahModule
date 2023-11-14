@@ -1,6 +1,6 @@
 ﻿namespace EarTechnicNoahModule.Global
 {
-    public class Resources
+    public static class Resources
     {
         public const int ManufacturerID = 177;
         public const int ManufacturerModuleId = 4;
@@ -9,7 +9,7 @@
         public const string Os32Bit = "HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432NODE\\HIMSA\\Installationinfo\\Noah\\v4";
         public const int REM_L = 3;
         public const int REM_R = 4;
-        public const int Audiogram = 1;
+        public const int AudioGram = 1;
         public const int HIFitting_L = 131;
         public const int HIFitting_R = 132;
         public const int HISelection_L = 129;

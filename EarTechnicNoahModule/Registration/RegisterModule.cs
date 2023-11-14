@@ -27,7 +27,7 @@ namespace EarTechnicNoahModule.Registration
                        Version = version,
                        ActionMake = new List<Himsa.Noah.Modules.Registration.DataType>
                        {
-                           new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.Audiogram, DataFmtStd = 100},
+                           new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.AudioGram, DataFmtStd = 100},
                            new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.HITest_L, DataFmtStd = 100},
                            new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.HITest_R, DataFmtStd = 100},
                            new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.HIFitting_L, DataFmtStd = 100},
@@ -39,7 +39,7 @@ namespace EarTechnicNoahModule.Registration
                        },
                        ActionShow = new List<Himsa.Noah.Modules.Registration.DataType>
                        {
-                           new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.Audiogram, DataFmtStd = 100},
+                           new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.AudioGram, DataFmtStd = 100},
                            new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.HITest_L, DataFmtStd = 100},
                            new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.HITest_R, DataFmtStd = 100},
                            new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.HIFitting_L, DataFmtStd = 100},

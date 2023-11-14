@@ -4,13 +4,52 @@ using Himsa.Noah.Modules;
 using System.Windows.Forms;
 using EarTechnicNoahModule.Entity;
 using EarTechnicNoahModule.Global;
+using EarTechnicNoahModule.Registration;
 using Microsoft.Win32;
+using DataType = Himsa.Noah.Modules.DataType;
 
 namespace EarTechnicNoahModule
 {
     public class NoahConnectionHandler : MarshalByRefObject, ICallbackHandler
     {
         private readonly ModuleAPI _moduleApi = new ModuleAPI();
+        private readonly LaunchInfo _launchInfo;
+
+        private void DoNoahRequest(NotifyEventArgs eventArgs)
+        {
+            switch (eventArgs.Notification)
+            {
+                case NotificationType.LanguageChanged:
+                    SetLanguage();
+                    break;
+                
+                case NotificationType.ModuleDisconnect:
+                    DisconnectModule();
+                    break;
+                
+            }
+        }
+        private void NoahEventRequestHandler(object sender, EventArgs e)
+        {
+            var eventArgs = e as NotifyEventArgs;
+
+            if (eventArgs == null)
+                return;
+
+            DoNoahRequest(eventArgs);
+        }
+
+        private void SetLanguage()
+        {
+            var currentLang = _moduleApi.LanguageId;
+            
+            //
+        }
+        public NoahConnectionHandler()
+        {
+            _moduleApi.EventPublisher.Notify += NoahEventRequestHandler;
+            _launchInfo = _moduleApi.GetLaunchInfo();
+        }
         public static bool IsNoahInstalled()
         {
             var regKey = Environment.Is64BitOperatingSystem ? Registry.LocalMachine.OpenSubKey(Resources.Os64Bit)
@@ -20,69 +59,50 @@ namespace EarTechnicNoahModule
 
             return obj != null && obj is int num && num != 0;
         }
-        
         public bool CanSwitchPatient()
-        {
-            return AcceptToDisconnect();
-        }
-        public bool AcceptToDisconnect()
-        {
-            if (!CheckForSavedData())
-                return (MessageBox.Show("You have unsaved Data, Do you want to continue?", "Warning",
-                    MessageBoxButtons.YesNo) == DialogResult.Yes);
-            
-            return true;
-        }
-        private bool CheckForSavedData()
         {
             return false;
         }
+        public bool AcceptToDisconnect()
+        {
+            if (IsUnsavedData())
+                if (MessageBox.Show("You have unsaved data on your process, Do you want to continue?", "Warning",
+                        MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    DisconnectModule();
+                    return true;
+                }
 
-        private void DisableUserInputs()
+            return false;
+        }
+        private static bool IsUnsavedData()
         {
             throw new WarningException("Not Implemented Yet");
         }
-        private void EnableUserInputs()
+        public void ConnectWithNoah()
         {
-            throw new WarningException("Not Implemented Yet");
-        }
-        private void UpdatePatient()
-        {
-            throw new WarningException("Not Implemented Yet");
-        }
-
-        private void PatientSwitchCheck()
-        {
-            if (CanSwitchPatient())
+            var res = ConnectRes.ModuleNotRegistered;
+            
+            while (res != ConnectRes.Ok)
             {
-                DisableUserInputs();
-                UpdatePatient();
-                EnableUserInputs();
+                if (res == ConnectRes.ModuleNotRegistered)
+                {
+                    RegisterModule.handleModuleRegistration("1.0.0");
+                    res = _moduleApi.Connect(Resources.ManufacturerID, this, _launchInfo.Print, true);
+                }
+
+                if (res == ConnectRes.ModuleAlreadyRunning)
+                    break;
+                
             }
         }
-        
-        public bool LaunchModule()
-        {
-            try {
-                _moduleApi.Connect(Resources.ManufacturerID, this, true);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return false;
-            }
-
-            return true;
-        }
-
-        public void CheckForNoah()
+        public void LaunchModule()
         {
             throw new WarningException("Not Implemented Yet");
         }
-
         public bool IsCorrectModule()
         {
-            return _moduleApi.GetLaunchInfo().ModuleId == Resources.ManufacturerModuleId;
+            return _launchInfo.ModuleId == Resources.ManufacturerModuleId;
         }
 
         public bool IsNoahAlive()
@@ -90,7 +110,7 @@ namespace EarTechnicNoahModule
             return _moduleApi.IsNoahAlive();
         }
 
-        public void DısconnectModule()
+        public void DisconnectModule()
         {
             _moduleApi.Disconnect();
         }
@@ -105,8 +125,8 @@ namespace EarTechnicNoahModule
             action.DeviceType = deviceType;
 
             action.DataType = earType.ToString() == Resources.LeftEar
-                ? new DataType { Code = Resources.HIFitting_L, Format = 100 }
-                : new DataType { Code = Resources.HIFitting_R, Format = 100 };
+                ? new DataType { Code = Resources.HIFitting_L, Format = 500 }
+                : new DataType { Code = Resources.HIFitting_R, Format = 500 };
             
             _moduleApi.CurrentSession.Actions.Add(action);
         }
@@ -115,9 +135,29 @@ namespace EarTechnicNoahModule
         {
             action.DeviceType = deviceType;
 
-            action.DataType = new DataType { Code = Resources.Audiogram, Format = 100 };
+            action.DataType = new DataType { Code = Resources.AudioGram, Format = 502 };
 
             _moduleApi.CurrentSession.Actions.Add(action);
+            
+        }
+
+        public byte[] GetAudioGramActionData() // Set Patient On Noah Before Call The Function, if its not handled then returns null
+        {
+            byte[] data = null;
+
+            if (_moduleApi.CurrentPatient == null)
+                return null;
+            
+            foreach (var currentSessionAction in _moduleApi.CurrentPatient.CurrentSession.Actions)
+            {
+                if (currentSessionAction.DataType.Code == Resources.AudioGram &&
+                    currentSessionAction.DataType.Format == 502)
+                    data = currentSessionAction.GetPublicData();
+                
+                break;
+            }
+            
+            return data;
         }
         
     }
