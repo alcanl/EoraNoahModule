@@ -27,11 +27,11 @@ namespace EarTechnicNoahModule.Registration
                        Version = version,
                        ActionMake = new List<Himsa.Noah.Modules.Registration.DataType>
                        {
-                           new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.AudioGram, DataFmtStd = 100},
+                           new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.AudioGram, DataFmtStd = 502},
                            new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.HITest_L, DataFmtStd = 100},
                            new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.HITest_R, DataFmtStd = 100},
-                           new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.HIFitting_L, DataFmtStd = 100},
-                           new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.HIFitting_R, DataFmtStd = 100},
+                           new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.HIFitting_L, DataFmtStd = 500},
+                           new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.HIFitting_R, DataFmtStd = 500},
                            new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.REM_L, DataFmtStd = 100},
                            new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.REM_R, DataFmtStd = 100},
                            new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.HISelection_L, DataFmtStd = 100},
@@ -39,11 +39,11 @@ namespace EarTechnicNoahModule.Registration
                        },
                        ActionShow = new List<Himsa.Noah.Modules.Registration.DataType>
                        {
-                           new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.AudioGram, DataFmtStd = 100},
+                           new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.AudioGram, DataFmtStd = 502},
                            new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.HITest_L, DataFmtStd = 100},
                            new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.HITest_R, DataFmtStd = 100},
-                           new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.HIFitting_L, DataFmtStd = 100},
-                           new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.HIFitting_R, DataFmtStd = 100},
+                           new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.HIFitting_L, DataFmtStd = 500},
+                           new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.HIFitting_R, DataFmtStd = 500},
                            new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.REM_L, DataFmtStd = 100},
                            new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.REM_R, DataFmtStd = 100},
                            new Himsa.Noah.Modules.Registration.DataType {DataTypeCode = Resources.HISelection_L, DataFmtStd = 100},
