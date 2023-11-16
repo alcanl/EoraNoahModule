@@ -4,6 +4,7 @@ using Himsa.Noah.Modules;
 using System.Windows.Forms;
 using EarTechnicNoahModule.Entity;
 using EarTechnicNoahModule.Global;
+using EarTechnicNoahModule.ModuleGUI;
 using EarTechnicNoahModule.Registration;
 using Microsoft.Win32;
 using DataType = Himsa.Noah.Modules.DataType;
@@ -14,6 +15,7 @@ namespace EarTechnicNoahModule
     {
         private readonly ModuleAPI _moduleApi = new ModuleAPI();
         private readonly LaunchInfo _launchInfo;
+        private bool _moduleConnected;
 
         private void DoNoahRequest(NotifyEventArgs eventArgs)
         {
@@ -49,6 +51,7 @@ namespace EarTechnicNoahModule
         {
             _moduleApi.EventPublisher.Notify += NoahEventRequestHandler;
             _launchInfo = _moduleApi.GetLaunchInfo();
+            _moduleConnected = false;
         }
         public static bool IsNoahInstalled()
         {
@@ -93,19 +96,24 @@ namespace EarTechnicNoahModule
 
                 if (res == ConnectRes.ModuleAlreadyRunning)
                     break;
-                
             }
+
+            _moduleConnected = true;
         }
-        public void LaunchModule()
+        public bool CanModuleLaunch()
         {
-            throw new WarningException("Not Implemented Yet");
+            if (_moduleApi.CurrentPatient == null || !IsNoahAlive() || !IsCorrectModule() || !_moduleConnected)
+                return false;
+
+            return true;
+
         }
-        public bool IsCorrectModule()
+        private bool IsCorrectModule()
         {
             return _launchInfo.ModuleId == Resources.ManufacturerModuleId;
         }
 
-        public bool IsNoahAlive()
+        private bool IsNoahAlive()
         {
             return _moduleApi.IsNoahAlive();
         }
@@ -113,6 +121,7 @@ namespace EarTechnicNoahModule
         public void DisconnectModule()
         {
             _moduleApi.Disconnect();
+            _moduleConnected = false;
         }
 
         public ModulePatient GetNoahPatient()
@@ -131,11 +140,13 @@ namespace EarTechnicNoahModule
             _moduleApi.CurrentSession.Actions.Add(action);
         }
 
-        public void AddAudioGramAction(Himsa.Noah.Modules.Action action, short deviceType)
+        public void AddAudioGramAction(Himsa.Noah.Modules.Action action, short deviceType, string desc)
         {
             action.DeviceType = deviceType;
 
             action.DataType = new DataType { Code = Resources.AudioGram, Format = 502 };
+            action.Description = desc;
+            action.ActionGroup = DateTime.Now;
 
             _moduleApi.CurrentSession.Actions.Add(action);
             
@@ -150,14 +161,22 @@ namespace EarTechnicNoahModule
             
             foreach (var currentSessionAction in _moduleApi.CurrentPatient.CurrentSession.Actions)
             {
-                if (currentSessionAction.DataType.Code == Resources.AudioGram &&
+                if (currentSessionAction.DataType.Code == Resources.AudioGram && 
                     currentSessionAction.DataType.Format == 502)
                     data = currentSessionAction.GetPublicData();
                 
                 break;
             }
+
+            var bytes = _moduleApi.CurrentPatient.GetSetupData();
             
             return data;
+        }
+
+        public void UnregisterModule()
+        {
+            if (_moduleConnected)
+                RegisterModule.HandleModuleUnregistration();
         }
         
     }
