@@ -4,15 +4,15 @@ using System.IO;
 using EarTechnicNoahModule.Global;
 using Himsa.Noah.Modules;
 
-namespace EarTechnicNoahModule.Registration
+namespace EarTechnicNoahModuleTest.Registration
 {
     public static class RegisterModule
     {
-        public static void handleModuleRegistration(string version)
+        public static void HandleModuleRegistration(string version)
         {
             var str = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, AppDomain.CurrentDomain.FriendlyName);
             
-            using (RegistrationData regdata = new RegistrationData()
+            using (var regData = new RegistrationData()
                    {
                        ModuleName = Resources.ModuleName,
                        ModuleCategory = 0,
@@ -55,7 +55,7 @@ namespace EarTechnicNoahModule.Registration
                            new Himsa.Noah.Modules.Registration.ModuleAlias {ManufacturerId = Resources.ManufacturerID, ModuleId = 4}
                        }
 
-                   }) setRegistration(regdata);
+                   }) SetRegistration(regData);
         }
 
         public static void HandleModuleUnregistration()
@@ -64,9 +64,9 @@ namespace EarTechnicNoahModule.Registration
                 reg.UnRegisterModule(Resources.ManufacturerID, Resources.ManufacturerModuleId);
         }
 
-        private static void setRegistration(RegistrationData registrationData)
+        private static void SetRegistration(RegistrationData registrationData)
         {
-            using (Himsa.Noah.Modules.Registration registration = new Himsa.Noah.Modules.Registration())
+            using (var registration = new Himsa.Noah.Modules.Registration())
             {
                 registration.RegisterModule(registrationData);
             }

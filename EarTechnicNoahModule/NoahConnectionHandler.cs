@@ -6,7 +6,7 @@ using System.Xml;
 using EarTechnicNoahModule;
 using EarTechnicNoahModule.Entity;
 using EarTechnicNoahModule.Global;
-using EarTechnicNoahModule.Registration;
+using EarTechnicNoahModuleTest.Registration;
 using Microsoft.Win32;
 using DataType = Himsa.Noah.Modules.DataType;
 
@@ -127,7 +127,7 @@ namespace EarTechnicNoahModuleTest
             {
                 if (res == ConnectRes.ModuleNotRegistered)
                 {
-                    RegisterModule.handleModuleRegistration("1.0.0");
+                    RegisterModule.HandleModuleRegistration("1.0.0");
                     res = _moduleApi.Connect(Resources.ManufacturerID, this, _launchInfo.Print, true);
                 }
 
