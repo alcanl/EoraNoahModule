@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
+using System.Threading;
 using Himsa.Noah.Modules;
 using System.Windows.Forms;
 using System.Xml;
@@ -17,6 +19,9 @@ namespace EarTechnicNoahModuleTest
         private readonly ModuleAPI _moduleApi = new ModuleAPI();
         private readonly LaunchInfo _launchInfo;
         private bool _moduleConnected;
+        private Form _parentGui;
+        private bool _printing;
+        private ModulePatient _modulePatient;
 
         private void DoNoahRequest(NotifyEventArgs eventArgs)
         {
@@ -41,6 +46,33 @@ namespace EarTechnicNoahModuleTest
 
             DoNoahRequest(eventArgs);
         }
+        private bool Initialize(Form parentGui)
+        {
+            _parentGui = parentGui;
+
+            if (_printing)
+            {
+                // As this is a test example we choose to connect as fitting
+                _moduleApi.Connect(Resources.FittingModuleId, this, true);
+                _moduleConnected = true;
+                // Connect will throw an exception if connect fail. In that case it is illegal to call disconnect
+
+                var launchInfo = _moduleApi.GetLaunchInfo();
+                if (launchInfo.Print) //The user has started the module with an action to print
+                {
+                    MessageBox.Show("You need to print action (connecting to Noah as fitting)" + launchInfo.Action.Id + " now!");
+                }
+                else if (launchInfo.ActionGroup.HasValue) //The user has started the module with an action group to print
+                {
+                    var actionGroup = launchInfo.ActionGroup.Value;
+                    MessageBox.Show("You need to print action group (connecting to Noah as fitting)" + actionGroup + " now!");
+                }
+
+                return false;
+            }
+            return true;
+        }
+
         private static bool IsUnsavedData()
         {
             throw new WarningException("Not Implemented Yet");
@@ -49,8 +81,63 @@ namespace EarTechnicNoahModuleTest
         private void SetLanguage()
         {
             var currentLang = _moduleApi.LanguageId;
+
+            Enumerators.Language lng;
+
+            switch (currentLang)
+            {
+                case 1033:
+                    Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                    Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+                    lng = Enumerators.Language.English;
+                    break;
+                case 1055:
+                    Thread.CurrentThread.CurrentCulture = new CultureInfo("tr-TR");
+                    Thread.CurrentThread.CurrentUICulture = new CultureInfo("tr-TR");
+                    lng = Enumerators.Language.Turkish;
+                    break;
+                case 1031:
+                    Thread.CurrentThread.CurrentCulture = new CultureInfo("de-DE");
+                    Thread.CurrentThread.CurrentUICulture = new CultureInfo("de-DE");
+                    lng = Enumerators.Language.German;
+                    break;
+                case 1036:
+                    Thread.CurrentThread.CurrentCulture = new CultureInfo("fr-FR");
+                    Thread.CurrentThread.CurrentUICulture = new CultureInfo("fr-FR");
+                    lng = Enumerators.Language.French;
+                    break;
+                case 1049:
+                    Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
+                    Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru-RU");
+                    lng = Enumerators.Language.Russian;
+                    break;
+                case 3082:
+                    Thread.CurrentThread.CurrentCulture = new CultureInfo("es-ES");
+                    Thread.CurrentThread.CurrentUICulture = new CultureInfo("es-ES");
+                    lng = Enumerators.Language.Spanish;
+                    break;
+                case 1051:
+                    Thread.CurrentThread.CurrentCulture = new CultureInfo("sk-SK");
+                    Thread.CurrentThread.CurrentUICulture = new CultureInfo("sk-SK");
+                    lng = Enumerators.Language.Slovak;
+                    break;
+                case 2070:
+                    Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-PT");
+                    Thread.CurrentThread.CurrentUICulture = new CultureInfo("pt-PT");
+                    lng = Enumerators.Language.Portugal;
+                    break;
+                default:
+                    Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                    Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+                    lng = Enumerators.Language.English;
+                    break;
+            }
             
-            //
+            /*Application.Current.Dispatcher.Invoke((Action)delegate
+                    {
+                        Application.Current.MainWindow.Activate();
+                        parentGui.SetLanguage(lng);
+                    }); */
         }
         private static XmlDocument GetAudioGramXml(byte[] data)
         {
@@ -61,7 +148,7 @@ namespace EarTechnicNoahModuleTest
         }
         private bool IsCorrectModule()
         {
-            return _launchInfo.ModuleId == Resources.ManufacturerModuleId;
+            return _launchInfo.ModuleId == Resources.ManufacturerModuleIdFitting;
         }
 
         private bool IsNoahAlive()

@@ -113,9 +113,9 @@
     <ItemGroup>
         <Compile Include="App.cs" />
         <Compile Include="EarType.cs" />
-        <Compile Include="EnableDisable.cs" />
         <Compile Include="Entity\ModulePatient.cs" />
         <Compile Include="Entity\ModuleUser.cs" />
+        <Compile Include="Global\Enumerators.cs" />
         <Compile Include="Global\Resources.cs" />
         <Compile Include="ModuleGUI\MainForm.cs" />
         <Compile Include="NoahConnectionHandler.cs" />

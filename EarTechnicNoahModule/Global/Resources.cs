@@ -3,7 +3,8 @@
     public static class Resources
     {
         public const int ManufacturerID = 177;
-        public const int ManufacturerModuleId = 4;
+        public const int ManufacturerModuleIdFitting = 1;
+        public const int FittingModuleId = (ManufacturerID << 16) + ManufacturerModuleIdFitting;
         public const string ModuleName = "EarTechnic Eora Fitting Module";
         public const string Os64Bit = "HKEY_LOCAL_MACHINE\\SOFTWARE\\HIMSA\\Installationinfo\\Noah\\v4";
         public const string Os32Bit = "HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432NODE\\HIMSA\\Installationinfo\\Noah\\v4";

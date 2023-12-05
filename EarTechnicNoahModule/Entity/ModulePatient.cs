@@ -15,17 +15,17 @@ namespace EarTechnicNoahModule.Entity
         private string _eMailAddress;
         private string _idNumber;
 
-        public ModulePatient GetInfoFromNoah(ModuleAPI _moduleApı)
+        public ModulePatient GetInfoFromNoah(ModuleAPI moduleApı)
         {
-            _idNumber = _moduleApı.CurrentPatient.Id.ToString();
-            _firstName = _moduleApı.CurrentPatient.FirstName;
-            _lastName = _moduleApı.CurrentPatient.LastName;
-            _address = _moduleApı.CurrentPatient.Address1;
-            _birthDate = _moduleApı.CurrentPatient.BirthDate;
-            _gender = _moduleApı.CurrentPatient.Gender.ToString();
-            _eMailAddress = _moduleApı.CurrentPatient.Email;
-            _mobilePhoneNumber = _moduleApı.CurrentPatient.MobileTelephone;
-            _city = _moduleApı.CurrentPatient.City;
+            _idNumber = moduleApı.CurrentPatient.Id.ToString();
+            _firstName = moduleApı.CurrentPatient.FirstName;
+            _lastName = moduleApı.CurrentPatient.LastName;
+            _address = moduleApı.CurrentPatient.Address1;
+            _birthDate = moduleApı.CurrentPatient.BirthDate;
+            _gender = moduleApı.CurrentPatient.Gender.ToString();
+            _eMailAddress = moduleApı.CurrentPatient.Email;
+            _mobilePhoneNumber = moduleApı.CurrentPatient.MobileTelephone;
+            _city = moduleApı.CurrentPatient.City;
 
             return this;
         }

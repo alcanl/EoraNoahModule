@@ -61,7 +61,7 @@ namespace EarTechnicNoahModuleTest.Registration
         public static void HandleModuleUnregistration()
         {
             using (Himsa.Noah.Modules.Registration reg = new Himsa.Noah.Modules.Registration())
-                reg.UnRegisterModule(Resources.ManufacturerID, Resources.ManufacturerModuleId);
+                reg.UnRegisterModule(Resources.ManufacturerID, Resources.ManufacturerModuleIdFitting);
         }
 
         private static void SetRegistration(RegistrationData registrationData)
