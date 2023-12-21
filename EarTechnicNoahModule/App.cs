@@ -1,5 +1,4 @@
 ﻿using System.Windows.Forms;
-using EarTechnicNoahModule.ModuleGUI;
 
 namespace EarTechnicNoahModule
 {
@@ -7,7 +6,7 @@ namespace EarTechnicNoahModule
     {
         public static void Main()
         {
-            Application.Run(new MainForm());
+            Application.Run();
         }
     }
 }
