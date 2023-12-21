@@ -1,4 +1,4 @@
-﻿using System;
+Ü﻿using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
@@ -117,7 +117,7 @@ namespace EarTechnicNoahModuleTest
             switch (currentLang)
             {
                 case 1033:
-                    Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+Ü                    Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
                     Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
                     lng = Enumerators.Language.English;
                     break;
@@ -225,6 +225,7 @@ namespace EarTechnicNoahModuleTest
             _moduleApi.EventPublisher.Notify += NoahEventRequestHandler;
             _launchInfo = _moduleApi.GetLaunchInfo();
             _moduleConnected = false;
+initialize();
         }
         public static bool IsNoahInstalled() // Checks the pc for NOAH, use the function on install process
         {
