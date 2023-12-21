@@ -225,7 +225,7 @@ namespace EarTechnicNoahModuleTest
             _moduleApi.EventPublisher.Notify += NoahEventRequestHandler;
             _launchInfo = _moduleApi.GetLaunchInfo();
             _moduleConnected = false;
-initialize();
+Initialize();
         }
         public static bool IsNoahInstalled() // Checks the pc for NOAH, use the function on install process
         {
