@@ -237,7 +237,7 @@ Initialize();
             return obj != null && obj is int num && num != 0;
         }
         
-        public bool AcceptToDisconnect() //RELEVANT
+        public bool AcceptToDisconnect() //MANDATORY
         {
             if (IsUnsavedData())
                 if (MessageBox.Show("You have unsaved data on your process, Do you want to continue?", "Warning",
@@ -278,7 +278,7 @@ Initialize();
 
             return true;
         }
-        public bool CanSwitchPatient() // you can implement this function that lets the Noah can switch current patient. RELEVANT
+        public bool CanSwitchPatient() // you can implement this function that lets the Noah can switch current patient. MANDATORY
         {
             return false;
         }
